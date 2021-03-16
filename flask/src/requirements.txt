@@ -1,0 +1,9 @@
+python3
+pandas
+numpy
+PIL
+opencv-python
+tensorflow 
+matplotlib
+scipy
+imutils
