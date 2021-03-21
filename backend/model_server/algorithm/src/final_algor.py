@@ -21,10 +21,11 @@ from scipy.spatial.distance import euclidean
 from imutils import perspective
 from imutils import contours
 import imutils
-
+#경로처리라고 적힌 부분에 파일 경로 및 frontend/backend 처리해주시면 됩니다.
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+#1. 경로처리 (모델파일 경로)
 tflite_path="frozen_inference_graph.tflite"
 
 # Load the model.
@@ -38,6 +39,7 @@ interpreter.allocate_tensors()
 input_size = input_details[0]['shape'][2], input_details[0]['shape'][1]
 print(input_size)
 
+#2. 경로처리 (프론트에서 받은 이미지 파일 경로)
 testimg_dir='coin_hand.JPG'
 
 im = Image.open(testimg_dir)
@@ -74,6 +76,7 @@ seg_map = tf.squeeze(seg_map).numpy().astype(np.int8)
 
 # !wget https://raw.githubusercontent.com/CSAILVision/sceneparsing/master/objectInfo150.csv
 
+#3. 경로처리 기존의 라벨링 파일 (실행 파일과 같은 디렉토리에 위치 요망)
 label_all = 'objectInfo150.csv'
 ade20k_labels_info = pd.read_csv(label_all)
 labels_list = list(ade20k_labels_info['Name'])
@@ -273,44 +276,45 @@ def vis_segmentation(image, seg_map):
   plt.figure(figsize=(15, 5))
   grid_spec = gridspec.GridSpec(1, 4, width_ratios=[6, 6, 6, 1])
 
-  plt.subplot(grid_spec[0])
-  plt.imshow(image)
-  plt.axis('off')
-  plt.title('input image')
+  # plt.subplot(grid_spec[0])
+  # plt.imshow(image)
+  # plt.axis('off')
+  # plt.title('input image')
 
-  plt.subplot(grid_spec[1])
-  seg_image = label_to_color_image(seg_map).astype(np.uint8)
-  plt.imshow(seg_image)
-  plt.axis('off')
-  plt.title('segmentation map')
+  # plt.subplot(grid_spec[1])
+  # seg_image = label_to_color_image(seg_map).astype(np.uint8)
+  # plt.imshow(seg_image)
+  # plt.axis('off')
+  # plt.title('segmentation map')
 
-  plt.subplot(grid_spec[2])
-  plt.imshow(image)
-  plt.imshow(seg_image, alpha=0.7)
-  plt.axis('off')
-  plt.title('segmentation overlay')
+  # plt.subplot(grid_spec[2])
+  # plt.imshow(image)
+  # plt.imshow(seg_image, alpha=0.7)
+  # plt.axis('off')
+  # plt.title('segmentation overlay')
 
   unique_labels = np.unique(seg_map)
   #필요한 모델 output
   x=np.array(seg_map)
+
   #np.save('save_map', x) # x_save.npy
-  np.savetxt("new_save.txt", x, fmt='%d', delimiter=',')
-  print("new detection end")
+  # np.savetxt("new_save.txt", x, fmt='%d', delimiter=',')
+  # print("new detection end")
 
  
   
 
 
-  # print(unique_labels)
-  ax = plt.subplot(grid_spec[3])
-  plt.imshow(
-      FULL_COLOR_MAP[unique_labels].astype(np.uint8), interpolation='nearest')
-  ax.yaxis.tick_right()
-  plt.yticks(range(len(unique_labels)), LABEL_NAMES[unique_labels])
-  plt.xticks([], [])
-  ax.tick_params(width=0.0)
-  plt.grid('off')
-  plt.show()
+  # # print(unique_labels)
+  # ax = plt.subplot(grid_spec[3])
+  # plt.imshow(
+  #     FULL_COLOR_MAP[unique_labels].astype(np.uint8), interpolation='nearest')
+  # ax.yaxis.tick_right()
+  # plt.yticks(range(len(unique_labels)), LABEL_NAMES[unique_labels])
+  # plt.xticks([], [])
+  # ax.tick_params(width=0.0)
+  # plt.grid('off')
+  # plt.show()
   return x
 
 
@@ -339,12 +343,13 @@ hand_arr=vis_segmentation(im, seg_map)
 # ex_arr[5][6]=1
 # ex_arr[5][7]=1
 
-#front에서 받은 위치 값 g
+#4. 경로처리 : frontend에서 받은 위치 값 (x, y 값 경로)
 #행렬이 0에서 시작하므로 이것 주의하기!!!
-
-
 front_x=229 #행렬의 행(가로)
 front_y=232 #행렬의 열(세로)
+
+
+
 len_max=513 #손가락 최대 넓이 지정
 
 # front_x=5 #행렬의 행(가로)
@@ -357,16 +362,12 @@ right_arr=[0,0]
 #left_arr,right_arr(왼/오 양방향으로 손 검출이 끝나는 부분을 구하는 코드)
 
 for i in range(0,front_y):
-    print(front_y-i)
-    print(hand_arr[front_x][front_y-i])
     if hand_arr[front_x][front_y-i]==0:
         left_arr[0]=front_x
         left_arr[1]=front_y-i+1
         break
 
 for j in range(front_y,len_max):
-    print(j)
-    print(hand_arr[front_x][j])
     if hand_arr[front_x][j]==0:
         right_arr[0]=front_x
         right_arr[1]=j-1
@@ -391,8 +392,8 @@ print(right_arr[1]-left_arr[1]+1)
 img_path = testimg_dir
 
 # 이미지 읽기 및 전처리
-image = cv2.imread(img_path)
-image=cv2.resize(513,513)
+img = cv2.imread(img_path)
+image=cv2.resize(img,dsize=(513,513))
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 blur = cv2.GaussianBlur(gray, (9, 9), 0)
@@ -427,28 +428,25 @@ dist_in_pixel = euclidean(tl, tr)
 dist_in_mm = 22
 pixel_per_mm = dist_in_pixel/dist_in_mm
 
+
+# tl=left_arr
+# tr=right_arr
 # 나머지 윤곽 그리기
-for cnt in cnts:
-	box = cv2.minAreaRect(cnt)
-	box = cv2.boxPoints(box)
-	box = np.array(box, dtype="int")
-	box = perspective.order_points(box)
-	(tl, tr, br, bl) = box
-	cv2.drawContours(image, [box.astype("int")], -1, (0, 0, 255), 2)
-	mid_pt_horizontal = (tl[0] + int(abs(tr[0] - tl[0])/2), tl[1] + int(abs(tr[1] - tl[1])/2))
-	mid_pt_verticle = (tr[0] + int(abs(tr[0] - br[0])/2), tr[1] + int(abs(tr[1] - br[1])/2))
-	wid = euclidean(tl, tr)/pixel_per_mm
-	ht = euclidean(tr, br)/pixel_per_mm
-	cv2.putText(image, "{:.1f}mm".format(wid), (int(mid_pt_horizontal[0] - 15), int(mid_pt_horizontal[1] - 10)), 
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
-	cv2.putText(image, "{:.1f}mm".format(ht), (int(mid_pt_verticle[0] + 10), int(mid_pt_verticle[1])), 
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+
+wid = euclidean(left_arr, right_arr)/pixel_per_mm
+# ht = euclidean(tr, br)/pixel_per_mm
+# cv2.putText(image, "{:.1f}mm".format(wid), (int(mid_pt_horizontal[0] - 15), int(mid_pt_horizontal[1] - 10)), 
+# 	cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+# cv2.putText(image, "{:.1f}mm".format(ht), (int(mid_pt_verticle[0] + 10), int(mid_pt_verticle[1])), 
+# 	cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
 
 # show_images([image])
 
+r_wid=float(wid*10)
+print(r_wid)
 
 # 손가락 둘레 측정하기
-finger_round=int(wid*3.14)
+finger_round=int(r_wid*3.14)
 
 # 반지 호수
 a=[]
@@ -457,4 +455,11 @@ for size in range(44,74):
     a.append(size)
 
 ring_size=a.index(finger_round)+1
+
+
+#5. 경로처리: backend로 전송할 두 값 ring_size/finger_round
+print("ring size")
+print(ring_size)
+print("finger round")
+print(finger_round)
 

@@ -10,7 +10,6 @@ function Upload() {
   const imgStyle = {
     width: "80%",
     height: "80%",
-    marginLeft: "36px"
   };
 
   /* resize image func: 513 * 513 크기로 base64형식 이미지 리턴 */
