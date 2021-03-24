@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Resizer from "react-image-file-resizer";
 import tempPreview from "../images/tempPreview.png";
+import Button from 'react-bootstrap/Button';
 
 function Upload() {
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(tempPreview);
+  const history = useHistory();
 
   /* 이미지 크기 확인용 임시 스타일 */
   const imgStyle = {
@@ -41,8 +43,21 @@ function Upload() {
     }
   };
 
+  const onClick = () => {
+    if (image === null) return alert("no image");
+    else {
+      history.push({ pathname: "/measure", state: { image: image } });
+    }
+  };
+
   return (
     <div>
+      <h1 style={{ fontFamily: 'cookie',
+      width: '100vw' ,
+      textAlign:'center',
+      marginTop: '30px'}}>
+        UPLOAD</h1>
+
       <input
         type="file"
         accept="image/*"
@@ -51,23 +66,25 @@ function Upload() {
         style={{ display: "none" }}
       />
 
-      <label htmlFor="upload-image">
-        <img className="uploadImage" src={preview} style={imgStyle} />
+      <label style={{textAlign:'center',
+      width: '100vw',
+      marginTop: '75px'}} htmlFor="upload-image">
+      <img className="uploadImage" src={preview} style={imgStyle} />
       </label>
 
+      <h3 style={{ fontFamily: 'cookie',
+      width: '100vw' ,
+      textAlign:'center', 
+      marginTop: '80px'}}>
+        이미지를 클릭하여 업로드 하세요!</h3>
       <br></br>
 
-      {/*route link*/}
-      <Link
-        to={{
-          pathname: "/measure",
-          state: {
-            image: image /* Measure.js에 이미지 전달 */,
-          },
-        }}
-      >
-        <button>select</button>
-      </Link>
+      <div style={{ textAlign:'center',}}>
+      <Button onClick={onClick} variant="outline-secondary"
+      style={{ borderRadius: '50%',}}
+      >select</Button>
+      </div>
+      
     </div>
   );
 }
