@@ -1,21 +1,22 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
+# from starlette.middleware import Middleware
+# from starlette.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 # from fastapi.testclient import TestClient
 # from fastapi.responses import HTMLResponse
 
-import requests
-import json
+# import requests
+# import json
 
-#
+# FastAPI CORSMiddleware 
 app = FastAPI()
 
 # Add CORS URLs 
-# Default Port - React : 3000, Flask : 5000
+# Default Port - Nginx: 80, Flask : 5000
 origins = [
-    "http://localhost:80",
-    "http://localhost:5000"
+    "http://localhost"
 ]
 
 
@@ -27,6 +28,22 @@ app.add_middleware(
     allow_methods = ["*"],
     allow_headers = ["*"],
 )
+
+# # TRY: Starlette CORSMiddleware
+# origins = [ 
+#     "http://localhost:80"
+#     # "http://localhost:3000",
+#     # "http://localhost:3000/measure",
+#     # "http://localhost:5000"
+#     # "http://localhost:8000",
+#     # "http://localhost"   #되는 주소
+# ]
+
+# middleware = [
+#     Middleware(CORSMiddleware, allow_origins=origins)
+# ]
+
+# app = FastAPI(middleware=middleware)
 
 
 '''
@@ -74,17 +91,11 @@ async def send_data(
 async def return_result(result: Size):
     return result
 
-# #test
-# url = "http://localhost:8000/api/result"
-# data = {"circumference" : 50, "size" : 12}
-# res = request.port(url, data=json.dumps(data))
-# res.text
-
 
 # --------------- front 연동 테스트 --------------- #
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return {"message": "you're at API server"}
 
 
 
