@@ -76,12 +76,16 @@ function Measure() {
     <div>
       <div
         className="header"
-        style={{ fontFamily: "cookie", textAlign: "center", marginTop: "50px" }}
+        style={{ fontFamily: "ariblk",
+        textAlign: "center",
+        marginTop: "50px",
+        marginBottom: '30px',
+        fontSize: '21px' }}
       >
         MOVE REDLINE
       </div>
       <h2>       {/* 좌표 확인 test용*/}
-        coord x: {coord.x} y: {coord.y}
+        {/* coord x: {coord.x} y: {coord.y} */}
       </h2>
 
       <div id="image" style={boxStyle}>
@@ -91,12 +95,22 @@ function Measure() {
       </div>
 
       <div style={{ textAlign: "center" }}>
+<div style={{paddingTop: '60px'}}>
+        <h style={{fontFamily: 'OpenSans-Regular',
+            textAlign:'center',
+            width: '100vw',
+            fontSize: "14px",
+            }}>Place a red line around the finger you want <br></br>to measure.</h>
+</div>
         <Button
           onClick={handlePost}
-          variant="outline-secondary"
-          style={{ marginTop: "50px" }}
+          style={{ marginTop: "40px" ,
+          backgroundColor:'black',
+          borderColor:'black'
+        }}
         >
-          OK
+          <h style={{fontFamily: 'ariblk',
+        Color:'black'}}>OK</h>
         </Button>
       </div>
     </div>
