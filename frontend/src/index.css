@@ -11,10 +11,82 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-@font-face {
-  font-family: "cookie";
-  src: url("./font/Cookie.ttf");
+
+.start-bg {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: url("./images/mainImg.jpg") no-repeat center fixed;
+  background-size: cover;
 }
+
+.title {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:white;
+  width: 100%;
+  text-align:center;
+  font-size: 2.4rem;
+  font-family:'ariblk';
+}
+
+.titleText {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align:center;
+  color:white;
+  width: 100%;
+  font-family: "OpenSans-Regular";
+  font-size: 14px;
+}
+
+.header {
+  text-align: center;
+  font-family: 'ariblk';
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100vw;
+  font-size: 1.3rem;
+}
+
+.guideImg {
+  display: block;
+  margin: 0px auto;
+  width: 70%;
+}
+
+.guideNum {
+  font-family: 'ariblk';
+  font-size: 1.3rem;
+  padding-left: 2em;
+  margin-top:1em;
+  margin-bottom: 0.5em;
+}
+
+.guideText {
+
+    font-family: "OpenSans-Regular";
+    text-align: center;
+    width: 100vw;
+    font-size: 14px;
+}
+
+.startBtn {
+  text-align: right;
+  color: black;
+  font-family: 'ariblk';
+  font-size: 14.0pt;
+  font-style: normal;
+  font-weight: 400;
+  margin:1em;
+}
+
+
 @font-face {
   font-family: "ariblk";
   src: url("./font/ariblk.ttf");
