@@ -29,15 +29,46 @@ app.add_middleware(
     allow_headers = ["*"],
 )
 
+# # TRY: Starlette CORSMiddleware
+# origins = [ 
+#     "http://localhost:80"
+#     # "http://localhost:3000",
+#     # "http://localhost:3000/measure",
+#     # "http://localhost:5000"
+#     # "http://localhost:8000",
+#     # "http://localhost"   #되는 주소
+# ]
+
+# middleware = [
+#     Middleware(CORSMiddleware, allow_origins=origins)
+# ]
+
+# app = FastAPI(middleware=middleware)
+
 
 '''
 APIs
 '''
-
+# class Value(BaseModel):
+#     x: int
+#     y: int
 
 class Size(BaseModel):
     cirumference: int
     size: int
+
+
+# # x, y값 API
+# # content-type: application/json
+# @app.post('/api/x-y-value')
+# async def find_value(value: Value):
+#     return value                         
+
+# # resized 이미지 파일 API
+# # content-type: multipart/form-data
+# @app.post('/api/resized-file')
+# async def send_resized_file(file: UploadFile = File(...)):
+#     return {"filename" : file.filename}  
 
 
 
