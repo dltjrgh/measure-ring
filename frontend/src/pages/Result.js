@@ -29,8 +29,9 @@ function Result() {
         round: response.data.circumference,
         size: response.data.size,
       });
+      console.log("round: ",uesr.round, "size: ",user.size);
     } catch (e) {
-      console.log("API Err: ", e);
+      console.log("API ERROR: ", e);
     }
     setLoading(false);
   };
@@ -66,7 +67,6 @@ function Result() {
   };
 
   useEffect(() => {
-   
     fetchUser();
   }, []);
 
