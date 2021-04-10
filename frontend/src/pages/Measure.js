@@ -35,18 +35,24 @@ function Measure() {
   const handlePost = async () => {
     const x = trans(coord.x);
     const y = trans(coord.y);
-    const url = "http://localhost:8000/api/data";
+    const url = "http://localhost:8000/api/users";
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
     const data = new FormData(); // formData 생성
-    data.append("x", x);
-    data.append("y", y);
-    data.append("file", image);
+    /*변경 후*/
+    data.append("x_client", x);
+    data.append("y_client", y);
+    data.append("image_client", image);
+
+    /*변경 전*/
+    //data.append("x", x);
+    //data.append("y", y);
+    //data.append("file", image);
     for (var pair of data.entries()) {
-      // 확인용
+      //폼데이터 확인용
       console.log(pair[0] + ", " + pair[1]);
     }
     await axios
@@ -56,7 +62,7 @@ function Measure() {
       })
       .catch((err) => {
         console.log(err);
-        history.push("/result"); // 테스트용 - api 연동 실패해도 페이지 넘어가도록
+        //history.push("/result");     // 테스트용 - api 연동 실패해도 페이지 넘어가도록
       });
   };
 
