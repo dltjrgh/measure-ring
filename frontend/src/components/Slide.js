@@ -56,7 +56,7 @@ export default class LazyLoad extends Component {
             <div className="guideNum">4&nbsp;.</div>
             <div style={{ textAlign: "center", paddingBottom: "1em" }}>
               <div className="guideText">
-                Then RINGFIT will tell your ring FIT size.
+                Then Measure-ring will tell your ring size.
               </div>
             </div>
           </div>

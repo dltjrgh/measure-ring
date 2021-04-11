@@ -5,7 +5,7 @@ import Slide from "../components/Slide";
 function Guide() {
   return (
     <div>
-      <div className="header">RINGFIT GUIDE</div>
+      <div className="header">Measure-ring GUIDE</div>
       <Slide />
       <p></p>
       <p></p>
