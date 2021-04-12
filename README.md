@@ -1,6 +1,7 @@
 # :ring:Measure-ring
 - <b>Measure-ring</b> finds your ring size that perfectly fits your fingers! OpenCV is used to measure your finger's circumference, while Deeplab V3 detects your hand from the image.
 - With this application, you won't need papers and rulers anymore. All you need to do is to upload an image of your hand with 100 Korean won coin. Then, after adjusting the red line on your finger, you'll get your ring size!
+- You can also check the [Demo Video](https://drive.google.com/file/d/1JDMIl0ZozaS0hYJPeWHJ7NB3vggp2Xk8/view?usp=sharing)
 <br>
 
 ## **🛠 Tech Stack**
